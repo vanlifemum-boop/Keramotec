@@ -283,7 +283,9 @@
     // "pin": klassische Sticky-Bühne, Fortschritt über die Sektionshöhe.
     { section: "#top", canvas: ".stage-canvas", mode: "pin", render: renderHero, image: heroImage },
     // "pass": Hintergrund-Canvas, Fortschritt vom Eintritt bis zum Austritt.
-    { section: "#schutz", canvas: ".protection-canvas", mode: "pass", render: renderSurface, image: surfaceImage },
+    // Per Attribut statt per ID, damit Start- und Partnerseite dieselbe Buehne
+    // nutzen koennen, ohne dass eine von beiden eine fremde ID tragen muss.
+    { section: "[data-stage='surface']", canvas: ".protection-canvas", mode: "pass", render: renderSurface, image: surfaceImage },
   ];
 
   // ---------- Engine ----------

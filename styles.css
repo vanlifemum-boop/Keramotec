@@ -1363,6 +1363,195 @@ main[id] {
   }
 }
 
+/* ============ Bewerbungsformular (Partnerseite) ============ */
+.partner-form {
+  margin-top: clamp(44px, 6vw, 76px);
+}
+
+/* Ohne JavaScript kann die Bewerbung nicht verschickt werden — dann statt
+   eines toten Formulars der Hinweis aus dem <noscript>-Block. */
+html:not(.js) .partner-form {
+  display: none;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 26px 32px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0;
+  min-width: 0;
+}
+
+.form-field-wide {
+  grid-column: 1 / -1;
+}
+
+.partner-form label {
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.partner-form label span {
+  color: var(--red);
+}
+
+.partner-form input,
+.partner-form select,
+.partner-form textarea {
+  width: 100%;
+  min-height: 52px;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: 0;
+  background: rgba(255, 255, 255, 0.035);
+  color: var(--paper);
+  /* 16px verhindert, dass iOS beim Fokus in das Feld hineinzoomt. */
+  font-family: inherit;
+  font-size: 16px;
+  line-height: 1.45;
+  transition: border-color 200ms ease, background 200ms ease;
+  appearance: none;
+}
+
+.partner-form textarea {
+  min-height: 132px;
+  resize: vertical;
+}
+
+.partner-form select {
+  padding-right: 44px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%239da3a6' stroke-width='1.6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  background-size: 12px;
+}
+
+.partner-form input:hover,
+.partner-form select:hover,
+.partner-form textarea:hover {
+  border-color: var(--line-strong);
+}
+
+.partner-form input:focus,
+.partner-form select:focus,
+.partner-form textarea:focus {
+  border-color: var(--red);
+  background: rgba(255, 255, 255, 0.06);
+  outline: none;
+}
+
+.partner-form input:focus-visible,
+.partner-form select:focus-visible,
+.partner-form textarea:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+.partner-form [aria-invalid="true"] {
+  border-color: var(--red);
+}
+
+.form-consent {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin: 34px 0 0;
+  max-width: 780px;
+}
+
+.form-consent input {
+  flex: 0 0 auto;
+  width: 22px;
+  min-height: 22px;
+  height: 22px;
+  margin-top: 2px;
+  padding: 0;
+  accent-color: var(--red);
+  appearance: auto;
+}
+
+.form-consent label {
+  flex: 1 1 260px;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  line-height: 1.6;
+  text-transform: none;
+}
+
+.form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 18px 24px;
+  margin-top: 34px;
+}
+
+.form-actions .button[disabled] {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.form-actions .button[disabled]:hover {
+  transform: none;
+}
+
+.form-hint {
+  max-width: 460px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.form-hint-ok {
+  color: #fff;
+}
+
+.form-hint-warn {
+  color: var(--red);
+}
+
+.form-error {
+  color: var(--red);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+@media (pointer: coarse) {
+  .text-link {
+    padding-block: 12px 10px;
+  }
+}
+
+/* Tablets im Querformat (ab 981 px) zeigen noch die Desktop-Navigation,
+   werden aber mit dem Finger bedient — dort brauchen die Links Flaeche. */
+@media (pointer: coarse) and (min-width: 981px) {
+  .main-nav > a {
+    padding-block: 13px;
+  }
+
+  .main-nav > a:not(.nav-cta)::after {
+    bottom: 5px;
+  }
+
+  .footer-grid a:not(.brand) {
+    display: inline-block;
+    padding-block: 13px;
+  }
+}
+
 /* ============ Responsive ============
    Reihenfolge: kleiner Desktop -> Tablet quer -> Tablet hoch -> Handy ->
    kleines Handy -> Handy quer. Jede Stufe kuerzt zusaetzlich die Buehne. */
@@ -1419,6 +1608,10 @@ main[id] {
     --stage-height: 360vh;
   }
 
+  .form-grid {
+    gap: 22px 24px;
+  }
+
   .site-header {
     height: 76px;
   }
@@ -1469,11 +1662,17 @@ main[id] {
     text-transform: uppercase;
   }
 
-  .nav-cta {
+  .main-nav > .nav-cta {
     margin-top: 16px;
     padding: 15px 22px;
-    font-size: 14px !important;
-    letter-spacing: 0.1em !important;
+    font-size: 14px;
+    letter-spacing: 0.1em;
+  }
+
+  /* Fusszeilen-Links auf Trefferflaechengroesse bringen. */
+  .footer-grid a:not(.brand) {
+    display: inline-block;
+    padding-block: 13px;
   }
 
   .hero-shade {
@@ -1600,12 +1799,18 @@ main[id] {
   }
 
   .hero-actions .button,
-  .contact-actions .button {
+  .contact-actions .button,
+  .form-actions .button {
     width: 100%;
   }
 
-  .text-link {
-    padding-block: 11px 9px;
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+
+  .form-actions {
+    margin-top: 28px;
   }
 
   .hero-meta {

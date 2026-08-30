@@ -1,0 +1,548 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta
+      name="description"
+      content="Keramotec Partnerprogramm – Keramikversiegelung für Reisemobile und Caravans als Franchise. Für Wohnmobil-Händler, Fahrzeugaufbereiter und Quereinsteiger aus der Camper-Szene."
+    />
+    <meta name="theme-color" content="#07090a" />
+    <title>Partner werden | Keramotec Manufaktur</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%2307090a'/%3E%3Cpath d='M16 4l12 12-12 12L4 16z' fill='none' stroke='%23e2231a' stroke-width='2'/%3E%3Ctext x='16' y='21' font-family='Helvetica,Arial,sans-serif' font-size='13' font-weight='700' fill='%23fff' text-anchor='middle'%3EK%3C/text%3E%3C/svg%3E"
+    />
+    <link rel="preload" as="image" href="assets/keramotec-hero.webp" fetchpriority="high" />
+    <link rel="stylesheet" href="styles.css" />
+    <script>
+      /* Layout-Weiche vor dem ersten Paint: nur wo Bewegung erwuenscht und
+         Datenvolumen kein Thema ist, wird die Cinematic-Buehne aufgebaut. */
+      (function () {
+        var el = document.documentElement;
+        // Ohne diese Klasse wird das Bewerbungsformular ausgeblendet — es
+        // braucht JavaScript, um die Bewerbung ueberhaupt zu verschicken.
+        el.classList.add("js");
+        var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        var conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+        var save = !!(conn && (conn.saveData || /2g/.test(conn.effectiveType || "")));
+        el.classList.add(reduced || save ? "motion-off" : "js-cinematic");
+      })();
+    </script>
+    <script src="vendor/lenis.min.js" defer></script>
+    <script src="cinematic.js" defer></script>
+    <script src="script.js" defer></script>
+    <script src="partner.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#inhalt">Zum Inhalt springen</a>
+    <div class="film-grain" aria-hidden="true"></div>
+    <div class="scroll-progress" aria-hidden="true"><span></span></div>
+
+    <header class="site-header" data-header>
+      <a class="brand" href="#top" aria-label="Keramotec Partnerprogramm – nach oben">
+        <span class="brand-mark" aria-hidden="true">K</span>
+        <span class="brand-type">
+          <strong>Keramotec</strong>
+          <small>Partnerprogramm</small>
+        </span>
+      </a>
+
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="hauptnavigation">
+        <span></span><span></span>
+        <span class="sr-only">Navigation öffnen</span>
+      </button>
+
+      <nav id="hauptnavigation" class="main-nav" aria-label="Hauptnavigation">
+        <a href="#chance">Die Chance</a>
+        <a href="#system">Das System</a>
+        <a href="#ablauf">Ablauf</a>
+        <a href="index.html">Zur Manufaktur</a>
+        <a href="#bewerbung" class="nav-cta">Jetzt bewerben</a>
+      </nav>
+    </header>
+
+    <main id="inhalt">
+      <!-- ===================== Cinematic-Buehne ===================== -->
+      <section class="hero stage" id="top" aria-labelledby="hero-title">
+        <div class="hero-sticky">
+          <canvas class="stage-canvas" aria-hidden="true"></canvas>
+          <div class="hero-backdrop" aria-hidden="true"></div>
+          <div class="hero-shade" aria-hidden="true"></div>
+
+          <div class="stage-beats">
+            <div class="stage-beat shell" data-in="-0.12" data-out="0.46">
+              <div class="hero-content">
+                <p class="eyebrow hero-eyebrow">Partnerprogramm <span></span> Deutschlandweit</p>
+                <h1 id="hero-title">Die Nische,<br /><em>die keiner bedient.</em></h1>
+                <p class="hero-copy">
+                  Keramikversiegelung für Reisemobile und Caravans. Wir suchen Betriebe, die dieses
+                  Handwerk in ihrer Region übernehmen – mit Gebietsschutz, Schulung und Material aus
+                  der Manufaktur.
+                </p>
+                <div class="hero-actions">
+                  <a class="button button-primary" href="#bewerbung">Partner werden</a>
+                  <a class="button button-ghost" href="#chance">Warum diese Nische</a>
+                </div>
+                <div class="hero-meta" aria-label="Kernleistungen des Systems">
+                  <span>01 <b>Gebietsschutz</b></span>
+                  <span>02 <b>Schulung</b></span>
+                  <span>03 <b>Material</b></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="stage-beat shell" data-in="0.44" data-out="0.76">
+              <div class="hero-content">
+                <p class="eyebrow">Der Markt</p>
+                <p class="stage-headline">Große Flächen.<br /><em>Große Aufträge.</em></p>
+                <p class="hero-copy">
+                  Ein Reisemobil ist kein PKW mit mehr Blech. Es ist Dach, Aufbau, GFK,
+                  Acrylglasfenster, Markise, Polster und Innenraum – Fläche, die bezahlt wird.
+                </p>
+              </div>
+            </div>
+
+            <div class="stage-beat shell" data-in="0.74">
+              <div class="hero-content">
+                <p class="eyebrow">Deine Rolle</p>
+                <p class="stage-headline">Dein Gebiet.<br /><em>Dein Betrieb.</em></p>
+                <p class="hero-copy">
+                  Du arbeitest auf eigene Rechnung, in deiner Halle, mit deinem Namen im
+                  Handelsregister. Was du dazubekommst, sind Marke, Verfahren und Zugang.
+                </p>
+                <div class="hero-actions">
+                  <a class="button button-primary" href="#bewerbung">Jetzt bewerben</a>
+                  <a class="button button-ghost" href="#ablauf">Ablauf ansehen</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <a class="scroll-cue" href="#einstieg" aria-label="Weiter zum nächsten Abschnitt">
+            <span>Entdecken</span><i aria-hidden="true"></i>
+          </a>
+        </div>
+      </section>
+
+      <!-- ===================== Statement ===================== -->
+      <section class="statement section" id="einstieg">
+        <div class="shell statement-grid">
+          <p class="section-index" data-reveal>01 — Die Lage</p>
+          <div>
+            <p class="statement-kicker" data-reveal>Der Markt ist da. Die Betriebe fehlen.</p>
+            <h2 class="display-copy" data-reveal>
+              Fast jeder kann PKW.<br />Kaum einer <span>kann Reisemobil.</span>
+            </h2>
+            <p class="lead" data-reveal>
+              Wer ein Reisemobil versiegeln will, findet in vielen Regionen schlicht niemanden.
+              Nicht weil das Handwerk unbezahlbar wäre, sondern weil den meisten Betrieben die
+              Halle, die Torhöhe und die Erfahrung mit GFK, Aufbauten und Acrylglas fehlen. Genau
+              diese Lücke füllt das Keramotec-Partnerprogramm.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <div class="service-ribbon" aria-label="Leistungen des Partnersystems">
+        <div class="service-track">
+          <span>Gebietsschutz</span><i></i><span>Schulung</span><i></i><span>Material</span><i></i>
+          <span>Marke</span><i></i><span>Leads</span><i></i><span>Kalkulation</span><i></i>
+          <span>Rückhalt</span><i></i><span>Händlerzugang</span><i></i>
+          <span>Gebietsschutz</span><i></i><span>Schulung</span><i></i><span>Material</span><i></i>
+          <span>Marke</span><i></i><span>Leads</span><i></i><span>Kalkulation</span><i></i>
+          <span>Rückhalt</span><i></i><span>Händlerzugang</span><i></i>
+        </div>
+      </div>
+
+      <!-- ===================== Die Chance ===================== -->
+      <section class="comparison section" id="chance" aria-labelledby="chance-title">
+        <div class="shell">
+          <div class="section-head compact">
+            <p class="section-index" data-reveal>02 — Die Chance</p>
+            <h2 id="chance-title" data-reveal>Warum Reisemobil.</h2>
+          </div>
+          <div class="comparison-grid">
+            <article class="comparison-card problem" data-reveal>
+              <p>Der übliche Weg: PKW-Aufbereitung</p>
+              <ul>
+                <li>Aufbereitung außen startet bei 550 €, innen bei 150 €</li>
+                <li>Viele Fahrzeuge nötig, um die Halle auszulasten</li>
+                <li>Ein Anbieter in jedem Gewerbegebiet</li>
+                <li>Preisdruck über Portale und Vergleichsangebote</li>
+                <li>Kunde vergleicht nur den Preis</li>
+              </ul>
+            </article>
+            <article class="comparison-card solution" data-reveal>
+              <p>Der Keramotec-Weg: Reisemobil &amp; Caravan</p>
+              <ul>
+                <li>Außenpaket ab 1.750 € (5–6 m) bis ab 2.550 € (10–11 m)</li>
+                <li>Dazu Innenraum, Markise ab 275 €, Polster ab 299 €</li>
+                <li>Wenige Betriebe können es – Kunden fahren dafür weit</li>
+                <li>Ein Fahrzeug bindet die Halle mehrere Tage sinnvoll</li>
+                <li>Kunde vergleicht das Ergebnis, nicht den Preis</li>
+              </ul>
+            </article>
+          </div>
+          <div class="pricing-notice" data-reveal>
+            <strong>Woher die Zahlen stammen</strong>
+            <p>
+              Alle genannten Beträge sind Endkundenpreise aus der Preisliste der Keramotec
+              Manufaktur, Stand der bereitgestellten Broschüre. Sie zeigen den Auftragswert, nicht
+              deinen Ertrag – was davon als Deckungsbeitrag bleibt, hängt von Material, Zeit und
+              deiner Kostenstruktur ab und rechnen wir im Erstgespräch gemeinsam durch.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== Partnerprofile ===================== -->
+      <section class="specialties section" id="profile" aria-labelledby="profile-title">
+        <div class="shell">
+          <div class="section-head">
+            <p class="section-index" data-reveal>03 — Partnerprofile</p>
+            <h2 id="profile-title" data-reveal>Drei Wege hinein.</h2>
+          </div>
+          <div class="specialty-grid">
+            <article class="specialty-card" data-reveal>
+              <span class="card-label">Händler &amp; Werkstatt</span>
+              <h3>Zusatzertrag pro verkauftem Fahrzeug.</h3>
+              <p>
+                Du hast Halle, Hebebühne und Kunden – aber keine Veredelung im Programm. Ein
+                Neufahrzeug ist der einfachste Auftrag überhaupt, weil der Zustand perfekt ist. Die
+                Versiegelung wird Teil deines Verkaufsgesprächs statt einer fremden Dienstleistung.
+              </p>
+            </article>
+            <article class="specialty-card" data-reveal>
+              <span class="card-label">Fahrzeugaufbereiter</span>
+              <h3>Dasselbe Handwerk, größere Fläche.</h3>
+              <p>
+                Du beherrschst Vorbereitung, Politur und Applikation bereits. Was dazukommt, sind
+                Aufbauten, GFK, Acrylglas und die Kalkulation großer Flächen – plus eine Nische, in
+                der du nicht gegen drei Betriebe im selben Ort antrittst.
+              </p>
+            </article>
+            <article class="specialty-card specialty-red" data-reveal>
+              <span class="card-label">Quereinsteiger</span>
+              <h3>Vom Hobby zum Betrieb.</h3>
+              <p>
+                Du kommst aus der Camper-Szene, kennst die Fahrzeuge und die Leute. Für dich ist das
+                Systempaket am wichtigsten: Schulung, Verfahren, Kalkulation und ein Gebiet, in dem
+                du von Anfang an gefunden wirst.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== Das System ===================== -->
+      <section class="protection section" id="system" data-stage="surface" aria-labelledby="system-title">
+        <div class="protection-image" aria-hidden="true"></div>
+        <canvas class="protection-canvas" aria-hidden="true"></canvas>
+        <div class="shell protection-grid">
+          <div class="protection-copy">
+            <p class="section-index" data-reveal>04 — Das System</p>
+            <p class="eyebrow" data-reveal>Was du nicht selbst aufbauen musst</p>
+            <h2 id="system-title" data-reveal>Alles außer der Arbeit.</h2>
+            <p class="lead" data-reveal>
+              Du bringst Halle, Hände und Sorgfalt. Den Rest – Verfahren, Material, Marke und den
+              Zugang zur Branche – bekommst du fertig auf den Tisch.
+            </p>
+          </div>
+
+          <div class="benefit-grid">
+            <article data-reveal><b>01</b><h3>Gebietsschutz</h3><p>Exklusives Postleitzahlgebiet, zugeschnitten nach Fahrzeugbestand statt nach Fläche.</p></article>
+            <article data-reveal><b>02</b><h3>Schulung</h3><p>Grundschulung im Stammbetrieb an echten Fahrzeugen, Zertifikat und jährliche Auffrischung.</p></article>
+            <article data-reveal><b>03</b><h3>Material</h3><p>Zentraler Bezug der Systemprodukte – gleiche Chemie, gleiches Ergebnis, kalkulierbarer Einkauf.</p></article>
+            <article data-reveal><b>04</b><h3>Marke &amp; Auftritt</h3><p>Eigene Standortseite auf der Keramotec-Website, Fahrzeugbeschriftung, Drucksachen, Bildmaterial.</p></article>
+            <article data-reveal><b>05</b><h3>Anfragen</h3><p>Anfragen aus deinem Gebiet gehen an dich – inklusive der Warteliste, die sich dort schon gebildet hat.</p></article>
+            <article data-reveal><b>06</b><h3>Rückhalt</h3><p>Kalkulation, Angebotsvorlagen, Technik-Hotline, Reklamationsweg und der Austausch der Partner untereinander.</p></article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== Voraussetzungen ===================== -->
+      <section class="services section" id="voraussetzungen" aria-labelledby="voraussetzungen-title">
+        <div class="shell">
+          <div class="section-head">
+            <p class="section-index" data-reveal>05 — Voraussetzungen</p>
+            <div>
+              <p class="eyebrow" data-reveal>Ehrlich vorab, damit niemand Zeit verliert</p>
+              <h2 id="voraussetzungen-title" data-reveal>Was du mitbringst.</h2>
+            </div>
+          </div>
+
+          <div class="service-list">
+            <article class="service-row" data-reveal>
+              <span class="service-number">01</span>
+              <div>
+                <h3>Halle mit Höhe</h3>
+                <p>
+                  Richtwert: Tor über 3,50 m und Stellfläche für ein Fahrzeug bis 10 m Länge, plus
+                  Arbeitsraum ringsum. Das ist das Kriterium, an dem die meisten Anfragen scheitern.
+                </p>
+              </div>
+              <span class="service-tag">Pflicht</span>
+            </article>
+            <article class="service-row" data-reveal>
+              <span class="service-number">02</span>
+              <div>
+                <h3>Gewerbe &amp; Absicherung</h3>
+                <p>Angemeldetes Gewerbe, Betriebshaftpflicht, Strom, Wasser und Beleuchtung, die eine Lackkontrolle zulässt.</p>
+              </div>
+              <span class="service-tag">Pflicht</span>
+            </article>
+            <article class="service-row" data-reveal>
+              <span class="service-number">03</span>
+              <div>
+                <h3>Handwerkliche Sorgfalt</h3>
+                <p>Vorerfahrung in der Aufbereitung ist willkommen, aber keine Bedingung. Geduld bei der Vorbereitung schon.</p>
+              </div>
+              <span class="service-tag">Erwünscht</span>
+            </article>
+            <article class="service-row" data-reveal>
+              <span class="service-number">04</span>
+              <div>
+                <h3>Eigenkapital</h3>
+                <p>Für Einstiegsgebühr, Werkzeug, Startmaterial und die ersten Monate. Den Rahmen legen wir im Erstgespräch offen.</p>
+              </div>
+              <span class="service-tag">Pflicht</span>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== Ablauf ===================== -->
+      <section class="services section" id="ablauf" aria-labelledby="ablauf-title">
+        <div class="shell">
+          <div class="section-head">
+            <p class="section-index" data-reveal>06 — Ablauf</p>
+            <div>
+              <p class="eyebrow" data-reveal>Von der Bewerbung bis zum ersten Fahrzeug</p>
+              <h2 id="ablauf-title" data-reveal>Fünf Schritte.</h2>
+            </div>
+          </div>
+
+          <div class="service-list">
+            <article class="service-row" data-reveal>
+              <span class="service-number">01</span>
+              <div>
+                <h3>Bewerbung</h3>
+                <p>Das Formular unten. Zehn Minuten, dafür wissen wir beide sofort, ob es passt.</p>
+              </div>
+              <span class="service-tag">Du</span>
+            </article>
+            <article class="service-row" data-reveal>
+              <span class="service-number">02</span>
+              <div>
+                <h3>Erstgespräch</h3>
+                <p>Telefonat, rund 30 Minuten. Dein Gebiet, deine Halle, unsere Zahlen – offen in beide Richtungen.</p>
+              </div>
+              <span class="service-tag">Gemeinsam</span>
+            </article>
+            <article class="service-row" data-reveal>
+              <span class="service-number">03</span>
+              <div>
+                <h3>Hospitationstag</h3>
+                <p>
+                  Ein Tag im Stammbetrieb, an einem echten Fahrzeug, mit eigener Hand. Danach weißt
+                  du, ob du das jeden Tag machen willst – und wir wissen es auch.
+                </p>
+              </div>
+              <span class="service-tag">Vor Ort</span>
+            </article>
+            <article class="service-row" data-reveal>
+              <span class="service-number">04</span>
+              <div>
+                <h3>Zahlen &amp; Vertrag</h3>
+                <p>Vollständige Offenlegung, Vertragsentwurf, Bedenkzeit. Ohne Druck und ohne Unterschrift am selben Tag.</p>
+              </div>
+              <span class="service-tag">Schriftlich</span>
+            </article>
+            <article class="service-row" data-reveal>
+              <span class="service-number">05</span>
+              <div>
+                <h3>Schulung &amp; Start</h3>
+                <p>Schulung, Gebietsfreigabe, deine Standortseite geht live, Eröffnungskampagne im Gebiet.</p>
+              </div>
+              <span class="service-tag">Start</span>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== Zahlen ===================== -->
+      <section class="pricing section" id="zahlen" aria-labelledby="zahlen-title">
+        <div class="shell">
+          <div class="pricing-intro">
+            <div>
+              <p class="section-index" data-reveal>07 — Zahlen</p>
+              <h2 id="zahlen-title" data-reveal>Was der Kunde zahlt.</h2>
+            </div>
+            <p data-reveal>
+              Damit du die Größenordnung einschätzen kannst, hier die Endkundenpreise aus der
+              Preisliste der Manufaktur. Was davon bei dir bleibt, rechnen wir im Erstgespräch
+              zusammen durch – mit deinen Zahlen, nicht mit Musterbeispielen.
+            </p>
+          </div>
+
+          <div class="price-groups">
+            <details class="price-group" open data-reveal>
+              <summary><span>Reisemobil &amp; Caravan – außen</span><small>ab 1.750 €</small></summary>
+              <div class="price-table" role="table" aria-label="Außenpreise für Reisemobile und Caravans">
+                <div role="row"><span role="cell">5–6 m</span><b role="cell">ab 1.750,00 €</b></div>
+                <div role="row"><span role="cell">7–8 m</span><b role="cell">ab 1.950,00 €</b></div>
+                <div role="row"><span role="cell">10–11 m</span><b role="cell">ab 2.550,00 €</b></div>
+              </div>
+              <p class="price-note">Paketpreise inklusive Dach, Fenster und Anbauteile.</p>
+            </details>
+
+            <details class="price-group" data-reveal>
+              <summary><span>Was zusätzlich dazukommt</span><small>ab 75 €</small></summary>
+              <div class="price-table" role="table" aria-label="Zusatzleistungen">
+                <div role="row"><span role="cell">Polsterversiegelung Sitzgruppe</span><b role="cell">ab 299,00 €</b></div>
+                <div role="row"><span role="cell">Markise Oberseite, 3–5 m</span><b role="cell">ab 275,00 €</b></div>
+                <div role="row"><span role="cell">Bad: Waschbecken &amp; Duschtasse</span><b role="cell">ab 275,00 €</b></div>
+                <div role="row"><span role="cell">Alufelgen reinigen &amp; versiegeln</span><b role="cell">55,00 € / Stück</b></div>
+                <div role="row"><span role="cell">Acrylglasfenster aufbereiten</span><b role="cell">45,00 € / Stück</b></div>
+                <div role="row"><span role="cell">Geruchsneutralisierung Wohnmobil</span><b role="cell">195,00 €</b></div>
+              </div>
+            </details>
+
+            <details class="price-group" data-reveal>
+              <summary><span>Weitere Fahrzeuge</span><small>ab 650 €</small></summary>
+              <div class="price-table" role="table" aria-label="Preise für weitere Fahrzeuge">
+                <div role="row"><span role="cell">Motorrad, Jetski oder Quad</span><b role="cell">ab 650,00 €</b></div>
+                <div role="row"><span role="cell">PKW, SUV, Sportwagen oder Oldtimer</span><b role="cell">ab 1.350,00 €</b></div>
+                <div role="row"><span role="cell">Fahrzeugaufbereitung außen</span><b role="cell">ab 550,00 €</b></div>
+              </div>
+            </details>
+          </div>
+
+          <div class="pricing-notice" data-reveal>
+            <strong>Keine Ertragsversprechen</strong>
+            <p>
+              Wir nennen hier bewusst keine Umsätze oder Gewinne, die du erreichen wirst. Was ein
+              Betrieb erwirtschaftet, hängt von Gebiet, Auslastung, Saison und deiner Arbeitsweise
+              ab. Die Kennzahlen aus dem Stammbetrieb legen wir im persönlichen Gespräch vollständig
+              offen – vor jeder Unterschrift und mit Bedenkzeit.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== Bewerbung ===================== -->
+      <section class="contact section" id="bewerbung" aria-labelledby="bewerbung-title">
+        <div class="shell">
+          <div class="section-head">
+            <p class="section-index" data-reveal>08 — Bewerbung</p>
+            <div>
+              <p class="eyebrow" data-reveal>Zehn Minuten, ehrlich ausgefüllt</p>
+              <h2 id="bewerbung-title" data-reveal>Erzähl uns von<br /><span>deinem Betrieb.</span></h2>
+            </div>
+          </div>
+
+          <form class="partner-form" data-partner-form novalidate data-reveal>
+            <div class="form-grid">
+              <p class="form-field">
+                <label for="f-name">Name <span aria-hidden="true">*</span></label>
+                <input id="f-name" name="Name" type="text" autocomplete="name" required />
+              </p>
+              <p class="form-field">
+                <label for="f-betrieb">Betrieb (falls vorhanden)</label>
+                <input id="f-betrieb" name="Betrieb" type="text" autocomplete="organization" />
+              </p>
+              <p class="form-field">
+                <label for="f-mail">E-Mail <span aria-hidden="true">*</span></label>
+                <input id="f-mail" name="E-Mail" type="email" autocomplete="email" required />
+              </p>
+              <p class="form-field">
+                <label for="f-tel">Telefon</label>
+                <input id="f-tel" name="Telefon" type="tel" autocomplete="tel" />
+              </p>
+              <p class="form-field">
+                <label for="f-plz">Postleitzahl des Standorts <span aria-hidden="true">*</span></label>
+                <input id="f-plz" name="Postleitzahl" type="text" inputmode="numeric" autocomplete="postal-code" required />
+              </p>
+              <p class="form-field">
+                <label for="f-profil">Das beschreibt dich am besten <span aria-hidden="true">*</span></label>
+                <select id="f-profil" name="Profil" required>
+                  <option value="">Bitte wählen</option>
+                  <option>Wohnmobil-Händler oder Werkstatt</option>
+                  <option>Fahrzeugaufbereiter / Detailer</option>
+                  <option>Quereinsteiger aus der Camper-Szene</option>
+                  <option>Etwas anderes</option>
+                </select>
+              </p>
+              <p class="form-field">
+                <label for="f-tor">Höhe deines Hallentors <span aria-hidden="true">*</span></label>
+                <select id="f-tor" name="Torhöhe" required>
+                  <option value="">Bitte wählen</option>
+                  <option>Über 3,50 m</option>
+                  <option>3,00 bis 3,50 m</option>
+                  <option>Unter 3,00 m</option>
+                  <option>Noch keine Halle</option>
+                </select>
+              </p>
+              <p class="form-field">
+                <label for="f-flaeche">Hallenfläche in m²</label>
+                <input id="f-flaeche" name="Hallenfläche" type="text" inputmode="numeric" />
+              </p>
+              <p class="form-field">
+                <label for="f-start">Wann möchtest du starten? <span aria-hidden="true">*</span></label>
+                <select id="f-start" name="Zeithorizont" required>
+                  <option value="">Bitte wählen</option>
+                  <option>So schnell wie möglich</option>
+                  <option>In drei bis sechs Monaten</option>
+                  <option>Innerhalb eines Jahres</option>
+                  <option>Erst einmal nur informieren</option>
+                </select>
+              </p>
+              <p class="form-field form-field-wide">
+                <label for="f-text">Erfahrung, Ausstattung, Fragen</label>
+                <textarea id="f-text" name="Nachricht" rows="5"></textarea>
+              </p>
+            </div>
+
+            <p class="form-consent">
+              <input id="f-ok" name="Einverständnis" type="checkbox" required />
+              <label for="f-ok">
+                Meine Angaben dürfen zur Bearbeitung dieser Partneranfrage gespeichert und
+                verwendet werden. Ich kann dem jederzeit formlos widersprechen.
+              </label>
+            </p>
+
+            <div class="form-actions">
+              <button class="button button-primary" type="submit">Bewerbung absenden</button>
+              <span class="form-hint" data-form-hint>
+                Die Bewerbung wird als E-Mail vorbereitet und in deinem Mailprogramm geöffnet.
+              </span>
+            </div>
+          </form>
+
+          <noscript>
+            <p class="form-hint form-hint-warn">
+              Für das Bewerbungsformular wird JavaScript benötigt. Schreib uns ohne JavaScript
+              bitte direkt eine E-Mail mit Name, Betrieb, Postleitzahl, Höhe deines Hallentors und
+              deinem Zeithorizont.
+            </p>
+          </noscript>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="shell footer-grid">
+        <a class="brand footer-brand" href="#top" aria-label="Keramotec Partnerprogramm – nach oben">
+          <span class="brand-mark" aria-hidden="true">K</span>
+          <span class="brand-type"><strong>Keramotec</strong><small>Partnerprogramm</small></span>
+        </a>
+        <p>Keramikversiegelung auf höchstem Niveau.</p>
+        <div><a href="index.html">Zur Manufaktur</a></div>
+        <small>© <span data-year>2026</span> Keramotec Manufaktur</small>
+      </div>
+    </footer>
+
+    <a class="mobile-call" href="#bewerbung">Partner werden <span aria-hidden="true">→</span></a>
+  </body>
+</html>
