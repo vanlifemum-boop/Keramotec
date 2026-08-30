@@ -34,8 +34,9 @@ jobs:
       - name: Website vorbereiten
         run: |
           mkdir _site
-          cp index.html styles.css script.js _site/
+          cp index.html styles.css script.js cinematic.js _site/
           cp -R assets _site/assets
+          cp -R vendor _site/vendor
           touch _site/.nojekyll
 
       - name: Website-Paket hochladen

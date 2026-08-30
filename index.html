@@ -2,14 +2,32 @@
 <html lang="de">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta
       name="description"
       content="Keramotec Manufaktur – hochwertige Keramikversiegelung in Handarbeit für Wohnmobile, Caravans, Sportwagen, PKW, Boote, Polster und Immobilien."
     />
     <meta name="theme-color" content="#07090a" />
     <title>Keramotec Manufaktur | Keramikversiegelung auf höchstem Niveau</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%2307090a'/%3E%3Cpath d='M16 4l12 12-12 12L4 16z' fill='none' stroke='%23e2231a' stroke-width='2'/%3E%3Ctext x='16' y='21' font-family='Helvetica,Arial,sans-serif' font-size='13' font-weight='700' fill='%23fff' text-anchor='middle'%3EK%3C/text%3E%3C/svg%3E"
+    />
+    <link rel="preload" as="image" href="assets/keramotec-hero.webp" fetchpriority="high" />
     <link rel="stylesheet" href="styles.css" />
+    <script>
+      /* Layout-Weiche vor dem ersten Paint: nur wo Bewegung erwuenscht und
+         Datenvolumen kein Thema ist, wird die Cinematic-Buehne aufgebaut. */
+      (function () {
+        var el = document.documentElement;
+        var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        var conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+        var save = !!(conn && (conn.saveData || /2g/.test(conn.effectiveType || "")));
+        el.classList.add(reduced || save ? "motion-off" : "js-cinematic");
+      })();
+    </script>
+    <script src="vendor/lenis.min.js" defer></script>
+    <script src="cinematic.js" defer></script>
     <script src="script.js" defer></script>
   </head>
   <body>
@@ -41,29 +59,64 @@
     </header>
 
     <main id="inhalt">
-      <section class="hero" id="top" aria-labelledby="hero-title">
-        <div class="hero-backdrop" aria-hidden="true"></div>
-        <div class="hero-shade" aria-hidden="true"></div>
-        <div class="hero-content shell">
-          <p class="eyebrow hero-eyebrow">Schweizer Premium Qualität <span></span> Echte Handarbeit</p>
-          <h1 id="hero-title">Perfektion,<br /><em>die bleibt.</em></h1>
-          <p class="hero-copy">
-            Hochwertige Langzeitveredelung für Ihr Fahrzeug – durch unsere exklusive
-            Keramikversiegelung.
-          </p>
-          <div class="hero-actions">
-            <a class="button button-primary" href="#kontakt">Termin anfragen</a>
-            <a class="button button-ghost" href="#leistungen">Leistungen entdecken</a>
+      <section class="hero stage" id="top" aria-labelledby="hero-title">
+        <div class="hero-sticky">
+          <canvas class="stage-canvas" aria-hidden="true"></canvas>
+          <div class="hero-backdrop" aria-hidden="true"></div>
+          <div class="hero-shade" aria-hidden="true"></div>
+
+          <div class="stage-beats">
+            <div class="stage-beat shell" data-in="-0.12" data-out="0.46">
+              <div class="hero-content">
+                <p class="eyebrow hero-eyebrow">Schweizer Premium Qualität <span></span> Echte Handarbeit</p>
+                <h1 id="hero-title">Perfektion,<br /><em>die bleibt.</em></h1>
+                <p class="hero-copy">
+                  Hochwertige Langzeitveredelung für Ihr Fahrzeug – durch unsere exklusive
+                  Keramikversiegelung.
+                </p>
+                <div class="hero-actions">
+                  <a class="button button-primary" href="#kontakt">Termin anfragen</a>
+                  <a class="button button-ghost" href="#leistungen">Leistungen entdecken</a>
+                </div>
+                <div class="hero-meta" aria-label="Keramotec Kernwerte">
+                  <span>01 <b>Manufakturarbeit</b></span>
+                  <span>02 <b>Langzeitschutz</b></span>
+                  <span>03 <b>Werterhalt</b></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="stage-beat shell" data-in="0.44" data-out="0.76">
+              <div class="hero-content">
+                <p class="eyebrow">Der Auftrag</p>
+                <p class="stage-headline">Keramik<br /><em>statt Wachs.</em></p>
+                <p class="hero-copy">
+                  Die Versiegelung verbindet sich mit der Oberfläche, statt nur auf ihr zu liegen –
+                  Bahn für Bahn, von Hand aufgetragen.
+                </p>
+              </div>
+            </div>
+
+            <div class="stage-beat shell" data-in="0.74">
+              <div class="hero-content">
+                <p class="eyebrow">Das Ergebnis</p>
+                <p class="stage-headline">Tiefenglanz,<br /><em>der trägt.</em></p>
+                <p class="hero-copy">
+                  Wasser perlt ab, Schmutz findet weniger Halt, jede Reinigung geht schneller von
+                  der Hand.
+                </p>
+                <div class="hero-actions">
+                  <a class="button button-primary" href="#kontakt">Termin anfragen</a>
+                  <a class="button button-ghost" href="#preise">Preise ansehen</a>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="hero-meta" aria-label="Keramotec Kernwerte">
-            <span>01 <b>Manufakturarbeit</b></span>
-            <span>02 <b>Langzeitschutz</b></span>
-            <span>03 <b>Werterhalt</b></span>
-          </div>
+
+          <a class="scroll-cue" href="#intro" aria-label="Weiter zum nächsten Abschnitt">
+            <span>Entdecken</span><i aria-hidden="true"></i>
+          </a>
         </div>
-        <a class="scroll-cue" href="#intro" aria-label="Weiter zum nächsten Abschnitt">
-          <span>Entdecken</span><i aria-hidden="true"></i>
-        </a>
       </section>
 
       <section class="statement section" id="intro">
@@ -143,6 +196,7 @@
 
       <section class="protection section" id="schutz" aria-labelledby="protection-title">
         <div class="protection-image" aria-hidden="true"></div>
+        <canvas class="protection-canvas" aria-hidden="true"></canvas>
         <div class="shell protection-grid">
           <div class="protection-copy">
             <p class="section-index" data-reveal>03 — Wirkung</p>

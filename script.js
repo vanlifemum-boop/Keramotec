@@ -4,6 +4,7 @@ const hero = document.querySelector(".hero");
 const navToggle = document.querySelector(".nav-toggle");
 const nav = document.querySelector(".main-nav");
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+const cinematic = document.documentElement.classList.contains("js-cinematic");
 
 let ticking = false;
 
@@ -18,7 +19,14 @@ function updateScrollEffects() {
     progress.style.transform = `scaleX(${ratio})`;
   }
 
-  if (hero && !reducedMotion.matches && scrollTop < window.innerHeight * 1.2) {
+  // Der Parallax gilt nur dem CSS-Hintergrundbild. Laeuft die Cinematic-Engine,
+  // zeichnet das Canvas die Kamerafahrt und das Backdrop ist ausgeblendet.
+  if (
+    hero &&
+    !cinematic &&
+    !reducedMotion.matches &&
+    scrollTop < window.innerHeight * 1.2
+  ) {
     hero.style.setProperty("--hero-shift", `${Math.min(scrollTop * 0.16, 110)}px`);
   }
 

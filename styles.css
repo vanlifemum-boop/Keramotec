@@ -9,7 +9,16 @@
   --red: #e2231a;
   --red-dark: #a8130d;
   --silver: #dfe3e4;
-  --shell: min(1240px, calc(100vw - 48px));
+  /* 100% statt 100vw: 100vw schliesst die Scrollbar ein und erzeugt sonst auf
+     dem Desktop einen horizontalen Ueberhang. */
+  --shell: min(1240px, calc(100% - 48px));
+  --gutter: max(24px, calc((100% - 1240px) / 2));
+  /* Hoehe der Cinematic-Buehne: pro Geraeteklasse kuerzer, damit man sich auf
+     dem Handy nicht durch fuenf Bildschirme Hero scrollt. */
+  --stage-height: 460vh;
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -20,11 +29,16 @@
 html {
   scroll-behavior: smooth;
   background: var(--ink);
+  overflow-x: hidden;
+  /* clip statt hidden, wo verfuegbar: hidden macht den Body zum Scroll-
+     Container und bringt position: sticky ins Wanken. */
+  overflow-x: clip;
 }
 
 body {
   margin: 0;
   overflow-x: hidden;
+  overflow-x: clip;
   background: var(--ink);
   color: var(--paper);
   font-family: "Helvetica Neue", "Arial Nova", Arial, sans-serif;
@@ -35,6 +49,10 @@ body {
 
 body.nav-open {
   overflow: hidden;
+}
+
+html.has-lenis {
+  scroll-behavior: auto;
 }
 
 ::selection {
@@ -64,6 +82,14 @@ h2,
 h3,
 p {
   margin-top: 0;
+}
+
+p,
+li,
+address,
+summary,
+.price-table > div {
+  overflow-wrap: break-word;
 }
 
 address {
@@ -138,7 +164,7 @@ address {
   align-items: center;
   justify-content: space-between;
   height: 90px;
-  padding-inline: max(24px, calc((100vw - 1240px) / 2));
+  padding-inline: max(var(--gutter), var(--safe-left)) max(var(--gutter), var(--safe-right));
   border-bottom: 1px solid transparent;
   transition: height 320ms var(--ease), background-color 320ms ease, border-color 320ms ease,
     backdrop-filter 320ms ease;
@@ -155,6 +181,8 @@ address {
   display: inline-flex;
   align-items: center;
   gap: 12px;
+  /* 44 px Mindesthoehe: sichere Trefferflaeche fuer den Daumen. */
+  min-height: 44px;
   min-width: max-content;
 }
 
@@ -269,16 +297,37 @@ address {
   transition: transform 240ms ease;
 }
 
+/* ============ Cinematic-Buehne (scroll-cinematic) ============
+   Die Sektion wird nur mit aktiver Engine zur langen Scroll-Buehne. Ohne
+   JavaScript, bei prefers-reduced-motion oder Datensparen bleibt es ein
+   normales Hero mit Hintergrundbild und untereinander stehenden Textbloecken. */
 .hero {
   position: relative;
-  min-height: 100svh;
-  overflow: hidden;
-  isolation: isolate;
   background: #080a0b;
 }
 
-.hero::before,
-.hero::after {
+.js-cinematic .hero {
+  height: var(--stage-height);
+}
+
+.hero-sticky {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100svh;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.js-cinematic .hero-sticky {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+}
+
+.hero-sticky::before,
+.hero-sticky::after {
   content: "";
   position: absolute;
   z-index: 5;
@@ -288,12 +337,41 @@ address {
   background: #050607;
 }
 
-.hero::before {
+.hero-sticky::before {
   top: 0;
 }
 
-.hero::after {
+.hero-sticky::after {
   bottom: 0;
+}
+
+.stage-canvas,
+.protection-canvas {
+  position: absolute;
+  inset: 0;
+  display: none;
+  width: 100%;
+  height: 100%;
+}
+
+.stage-canvas {
+  z-index: -3;
+}
+
+.protection-canvas {
+  z-index: -2;
+}
+
+.js-cinematic .stage-canvas,
+.js-cinematic .protection-canvas {
+  display: block;
+}
+
+/* Mit Canvas uebernimmt dieser die Bildflaeche; das CSS-Hintergrundbild ist
+   der Fallback fuer alle anderen Faelle. */
+.js-cinematic .hero-backdrop,
+.js-cinematic .protection-image {
+  display: none;
 }
 
 .hero-backdrop {
@@ -317,12 +395,66 @@ address {
     linear-gradient(0deg, rgba(5, 7, 8, 0.75) 0%, transparent 42%);
 }
 
+.stage-beats {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+}
+
+/* Ohne Engine: Beats stehen untereinander, kein Inhalt geht verloren. */
+.stage-beat + .stage-beat {
+  border-top: 1px solid var(--line);
+}
+
+.stage-beat {
+  padding-block: 96px;
+}
+
+.stage-beat:first-child {
+  padding-block: 132px 96px;
+}
+
+/* Mit Engine: Beats liegen deckungsgleich uebereinander und werden vom
+   Scroll-Fortschritt ein- und ausgeblendet. */
+.js-cinematic .stage-beats {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.js-cinematic .stage-beat {
+  grid-area: 1 / 1;
+  min-width: 0;
+  align-self: center;
+  padding-block: 150px 108px;
+  border-top: 0;
+  opacity: 0;
+  will-change: opacity, transform;
+}
+
+.js-cinematic .stage-beat:first-child {
+  opacity: 1;
+}
+
 .hero-content {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  min-height: 100svh;
-  padding-block: 150px 108px;
+}
+
+.stage-headline {
+  margin: 12px 0 0;
+  font-size: clamp(52px, 8vw, 122px);
+  font-weight: 700;
+  letter-spacing: -0.066em;
+  line-height: 0.88;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+.stage-headline em {
+  color: transparent;
+  font-style: normal;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.68);
 }
 
 .eyebrow {
@@ -359,6 +491,7 @@ address {
 
 .hero h1 {
   max-width: 790px;
+  margin-top: 0;
   font-size: clamp(66px, 10vw, 154px);
   text-wrap: balance;
   animation: rise-in 1s 260ms var(--ease) both;
@@ -457,8 +590,8 @@ address {
 
 .scroll-cue {
   position: absolute;
-  right: max(24px, calc((100vw - 1240px) / 2));
-  bottom: 50px;
+  right: max(var(--gutter), var(--safe-right));
+  bottom: max(50px, var(--safe-bottom));
   z-index: 6;
   display: flex;
   align-items: center;
@@ -494,6 +627,19 @@ address {
   padding-block: clamp(96px, 12vw, 180px);
 }
 
+/* Sprungziele nicht unter den fixen Header laufen lassen. */
+section[id],
+main[id] {
+  scroll-margin-top: 96px;
+}
+
+@media (max-width: 680px) {
+  section[id],
+  main[id] {
+    scroll-margin-top: 74px;
+  }
+}
+
 .section-index {
   color: var(--muted);
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
@@ -514,6 +660,15 @@ address {
   display: grid;
   grid-template-columns: minmax(160px, 0.7fr) minmax(0, 2.3fr);
   gap: clamp(36px, 7vw, 120px);
+}
+
+.statement-grid > *,
+.section-head > *,
+.craft-grid > *,
+.contact-grid > *,
+.protection-grid > *,
+.pricing-intro > * {
+  min-width: 0;
 }
 
 .statement-kicker {
@@ -1208,7 +1363,62 @@ address {
   }
 }
 
+/* ============ Responsive ============
+   Reihenfolge: kleiner Desktop -> Tablet quer -> Tablet hoch -> Handy ->
+   kleines Handy -> Handy quer. Jede Stufe kuerzt zusaetzlich die Buehne. */
+
+@media (max-width: 1180px) {
+  :root {
+    --shell: min(1240px, calc(100% - 40px));
+    --gutter: max(20px, calc((100% - 1240px) / 2));
+    --stage-height: 420vh;
+  }
+
+  .craft-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .craft-visual {
+    min-height: 460px;
+  }
+}
+
+/* Tablet quer (iPad 1024, Surface 1280 im Splitscreen) */
+@media (max-width: 1024px) {
+  :root {
+    --stage-height: 390vh;
+  }
+
+  .statement-grid,
+  .section-head,
+  .contact-grid {
+    grid-template-columns: minmax(120px, 0.5fr) minmax(0, 2.5fr);
+    gap: clamp(28px, 5vw, 64px);
+  }
+
+  .contact-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(300px, 0.8fr);
+  }
+
+  .specialty-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .service-row {
+    grid-template-columns: 56px minmax(0, 1fr) auto;
+    gap: 18px;
+  }
+
+  .price-table {
+    padding-left: clamp(0px, 3vw, 40px);
+  }
+}
+
 @media (max-width: 980px) {
+  :root {
+    --stage-height: 360vh;
+  }
+
   .site-header {
     height: 76px;
   }
@@ -1235,11 +1445,14 @@ address {
     justify-content: center;
     align-items: flex-start;
     gap: 20px;
-    padding: 100px max(24px, calc((100vw - 1240px) / 2));
+    padding: 100px max(var(--gutter), var(--safe-right)) 100px max(var(--gutter), var(--safe-left));
     visibility: hidden;
     opacity: 0;
     transform: translateY(-10px);
     background: rgba(7, 9, 10, 0.98);
+    /* Auf niedrigen Viewports (Handy quer) muss das Menue scrollen koennen. */
+    overflow-y: auto;
+    overscroll-behavior: contain;
     transition: opacity 240ms ease, transform 240ms ease, visibility 240ms;
   }
 
@@ -1250,6 +1463,7 @@ address {
   }
 
   .main-nav > a {
+    padding-block: 6px;
     font-size: clamp(24px, 7vw, 54px);
     letter-spacing: -0.04em;
     text-transform: uppercase;
@@ -1257,6 +1471,7 @@ address {
 
   .nav-cta {
     margin-top: 16px;
+    padding: 15px 22px;
     font-size: 14px !important;
     letter-spacing: 0.1em !important;
   }
@@ -1265,10 +1480,6 @@ address {
     background:
       linear-gradient(90deg, rgba(5, 7, 8, 0.96), rgba(5, 7, 8, 0.5) 72%, rgba(5, 7, 8, 0.3)),
       linear-gradient(0deg, rgba(5, 7, 8, 0.88), transparent 58%);
-  }
-
-  .hero-content {
-    justify-content: flex-end;
   }
 
   .statement-grid,
@@ -1288,11 +1499,23 @@ address {
   }
 
   .specialty-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .specialty-card {
     min-height: 340px;
+  }
+
+  .craft-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .craft-visual {
+    min-height: 420px;
+  }
+
+  .protection-grid {
+    gap: 56px;
   }
 
   .pricing-intro {
@@ -1311,11 +1534,14 @@ address {
 
 @media (max-width: 680px) {
   :root {
-    --shell: calc(100vw - 32px);
+    --shell: calc(100% - 32px);
+    --gutter: 16px;
+    --stage-height: 300vh;
   }
 
+  /* Platz fuer die fixe Kontaktleiste inklusive Home-Indicator. */
   body {
-    padding-bottom: 66px;
+    padding-bottom: calc(66px + var(--safe-bottom));
   }
 
   .site-header,
@@ -1343,13 +1569,30 @@ address {
       linear-gradient(90deg, rgba(5, 7, 8, 0.72), transparent);
   }
 
-  .hero-content {
-    min-height: 100svh;
-    padding-block: 120px 64px;
+  .stage-beat {
+    padding-block: 76px;
   }
 
-  .hero h1 {
-    font-size: clamp(58px, 20vw, 92px);
+  .stage-beat:first-child,
+  .js-cinematic .stage-beat {
+    padding-block: 116px 76px;
+  }
+
+  .hero h1,
+  .stage-headline {
+    font-size: clamp(40px, 12.5vw, 64px);
+  }
+
+  .hero-eyebrow {
+    flex-wrap: wrap;
+    gap: 8px 10px;
+    margin-bottom: 18px;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+  }
+
+  .hero-eyebrow span {
+    width: 20px;
   }
 
   .hero-copy {
@@ -1359,6 +1602,10 @@ address {
   .hero-actions .button,
   .contact-actions .button {
     width: 100%;
+  }
+
+  .text-link {
+    padding-block: 11px 9px;
   }
 
   .hero-meta {
@@ -1374,8 +1621,11 @@ address {
   }
 
   .hero-meta b {
-    font-size: 8px;
+    font-size: 9px;
+    letter-spacing: 0.06em;
   }
+
+
 
   .scroll-cue {
     display: none;
@@ -1398,7 +1648,7 @@ address {
   .craft h2,
   .contact h2,
   .protection h2 {
-    font-size: clamp(42px, 14vw, 65px);
+    font-size: clamp(34px, 11vw, 52px);
   }
 
   .service-row {
@@ -1420,7 +1670,7 @@ address {
   }
 
   .protection::after {
-    background: rgba(5, 7, 8, 0.78);
+    background: rgba(5, 7, 8, 0.66);
   }
 
   .protection-grid {
@@ -1443,8 +1693,12 @@ address {
     grid-template-columns: 1fr;
   }
 
+  .specialty-grid {
+    grid-template-columns: 1fr;
+  }
+
   .specialty-card {
-    min-height: 390px;
+    min-height: 340px;
   }
 
   .price-group summary {
@@ -1496,13 +1750,111 @@ address {
     align-items: center;
     justify-content: space-between;
     min-height: 66px;
-    padding-inline: 20px;
+    padding-block: 0 var(--safe-bottom);
+    padding-inline: max(20px, var(--safe-left)) max(20px, var(--safe-right));
     background: var(--red);
     color: #fff;
     font-size: 12px;
     font-weight: 800;
     letter-spacing: 0.11em;
     text-transform: uppercase;
+  }
+}
+
+/* Kleine Handys (iPhone SE, 320-400 px) */
+@media (max-width: 400px) {
+  :root {
+    --shell: calc(100% - 24px);
+    --gutter: 12px;
+    --stage-height: 280vh;
+  }
+
+  .hero h1,
+  .stage-headline {
+    font-size: clamp(36px, 13.2vw, 52px);
+  }
+
+  .hero-meta {
+    gap: 6px;
+  }
+
+  .hero-meta b {
+    font-size: 8px;
+    letter-spacing: 0.04em;
+  }
+
+  .price-table > div {
+    grid-template-columns: minmax(0, 1fr) 96px;
+    font-size: 12.5px;
+    gap: 12px;
+  }
+
+  .display-copy,
+  .section-head h2,
+  .pricing h2,
+  .craft h2,
+  .contact h2,
+  .protection h2 {
+    font-size: clamp(30px, 10.5vw, 44px);
+  }
+
+  .service-row {
+    grid-template-columns: 28px 1fr;
+    gap: 10px;
+  }
+
+  .brand-type small {
+    letter-spacing: 0.2em;
+  }
+}
+
+/* Handy im Querformat: wenig Hoehe, also kurze Buehne und flachere Abstaende. */
+@media (max-height: 560px) and (orientation: landscape) {
+  :root {
+    --stage-height: 240vh;
+  }
+
+  .hero h1 {
+    font-size: clamp(40px, 8vw, 62px);
+  }
+
+  .stage-headline {
+    font-size: clamp(38px, 7.5vw, 58px);
+  }
+
+  .hero-copy {
+    margin-top: 16px;
+    font-size: 15px;
+  }
+
+  .hero-actions {
+    margin-top: 20px;
+  }
+
+  .hero-meta {
+    display: none;
+  }
+
+  .stage-beat,
+  .stage-beat:first-child,
+  .js-cinematic .stage-beat {
+    padding-block: 92px 56px;
+  }
+
+  .scroll-cue {
+    display: none;
+  }
+
+  .main-nav {
+    padding-block: 84px 40px;
+  }
+
+  .main-nav > a {
+    font-size: clamp(20px, 5vh, 30px);
+  }
+
+  .section {
+    padding-block: 72px;
   }
 }
 
@@ -1527,5 +1879,26 @@ address {
 
   .hero-backdrop {
     transform: scale(1.05);
+  }
+
+  /* Sicherheitsnetz, falls die Klasse .js-cinematic doch gesetzt wurde:
+     keine Sticky-Buehne, keine ausgeblendeten Textbloecke. */
+  .hero,
+  .js-cinematic .hero {
+    height: auto;
+  }
+
+  .js-cinematic .hero-sticky {
+    position: relative;
+    height: auto;
+  }
+
+  .js-cinematic .stage-beats {
+    display: block;
+  }
+
+  .js-cinematic .stage-beat {
+    opacity: 1 !important;
+    transform: none !important;
   }
 }
