@@ -34,7 +34,11 @@ jobs:
       - name: Website vorbereiten
         run: |
           mkdir _site
+<<<<<<< HEAD
           cp index.html partner.html styles.css script.js cinematic.js motion.js partner.js _site/
+=======
+          cp index.html partner.html styles.css script.js cinematic.js partner.js _site/
+>>>>>>> origin/claude/keramotec-cinematik-mobile-uy89kv
           cp -R assets _site/assets
           cp -R vendor _site/vendor
           cp -R fonts _site/fonts
