@@ -21,8 +21,8 @@
 }
 
 /* Ersatzschriften auf die Breite der echten Schrift gebracht (gemessen im
-   Browser: Bodoni laeuft 15,3 % breiter als Times, Archivo 0,8 % schmaler als
-   Helvetica). Ohne das springt das Layout, sobald die Schrift nachgeladen ist. */
+   Browser: Fraunces laeuft 2,7 % breiter als Georgia, Archivo 0,8 % schmaler
+   als Helvetica). Ohne das springt das Layout beim Nachladen der Schrift. */
 @font-face {
   font-family: "Serif Ersatz";
   src: local("Georgia"), local("Times New Roman"), local("Liberation Serif"), local("DejaVu Serif");
