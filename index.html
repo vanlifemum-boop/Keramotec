@@ -8,11 +8,23 @@
       content="Keramotec Manufaktur – hochwertige Keramikversiegelung in Handarbeit für Wohnmobile, Caravans, Sportwagen, PKW, Boote, Polster und Immobilien."
     />
     <meta name="theme-color" content="#07090a" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Keramotec Manufaktur" />
+    <meta property="og:title" content="Keramotec Manufaktur | Keramikversiegelung auf höchstem Niveau" />
+    <meta property="og:description" content="Hochwertige Keramikversiegelung in Handarbeit für Wohnmobile, Caravans, Sportwagen, Boote und Immobilien." />
+    <meta property="og:image" content="https://vanlifemum-boop.github.io/Keramotec/assets/keramotec-hero.webp" />
+    <meta property="og:url" content="https://vanlifemum-boop.github.io/Keramotec/" />
+    <meta property="og:locale" content="de_DE" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="canonical" href="https://vanlifemum-boop.github.io/Keramotec/" />
     <title>Keramotec Manufaktur | Keramikversiegelung auf höchstem Niveau</title>
     <link
       rel="icon"
       href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%2307090a'/%3E%3Cpath d='M16 4l12 12-12 12L4 16z' fill='none' stroke='%23e2231a' stroke-width='2'/%3E%3Ctext x='16' y='21' font-family='Helvetica,Arial,sans-serif' font-size='13' font-weight='700' fill='%23fff' text-anchor='middle'%3EK%3C/text%3E%3C/svg%3E"
     />
+    <!-- Schriften zuerst: sie bestimmen das Layout, Bilder nur die Flaeche. -->
+    <link rel="preload" as="font" type="font/woff2" href="fonts/bodoni-moda.woff2" crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href="fonts/archivo.woff2" crossorigin />
     <link rel="preload" as="image" href="assets/keramotec-hero.webp" fetchpriority="high" />
     <link rel="stylesheet" href="styles.css" />
     <script>
@@ -20,6 +32,9 @@
          Datenvolumen kein Thema ist, wird die Cinematic-Buehne aufgebaut. */
       (function () {
         var el = document.documentElement;
+        // Ohne diese Klasse bleiben alle Startzustaende aus — sonst waere der
+        // Text bei abgeschaltetem JavaScript dauerhaft unsichtbar.
+        el.classList.add("js");
         var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
         var conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
         var save = !!(conn && (conn.saveData || /2g/.test(conn.effectiveType || "")));
@@ -28,6 +43,7 @@
     </script>
     <script src="vendor/lenis.min.js" defer></script>
     <script src="cinematic.js" defer></script>
+    <script src="motion.js" defer></script>
     <script src="script.js" defer></script>
   </head>
   <body>
@@ -288,7 +304,7 @@
       </section>
 
       <section class="pricing section" id="preise" aria-labelledby="pricing-title">
-        <div class="shell">
+        <div class="shell pricing-shell">
           <div class="pricing-intro">
             <div>
               <p class="section-index" data-reveal>06 — Preisliste</p>

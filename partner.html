@@ -8,11 +8,23 @@
       content="Keramotec Partnerprogramm – Keramikversiegelung für Reisemobile und Caravans als Franchise. Für Wohnmobil-Händler, Fahrzeugaufbereiter und Quereinsteiger aus der Camper-Szene."
     />
     <meta name="theme-color" content="#07090a" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Keramotec Manufaktur" />
+    <meta property="og:title" content="Partner werden | Keramotec Manufaktur" />
+    <meta property="og:description" content="Keramikversiegelung für Reisemobile als Partnerbetrieb – für Händler, Aufbereiter und Quereinsteiger." />
+    <meta property="og:image" content="https://vanlifemum-boop.github.io/Keramotec/assets/keramotec-hero.webp" />
+    <meta property="og:url" content="https://vanlifemum-boop.github.io/Keramotec/partner.html" />
+    <meta property="og:locale" content="de_DE" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="canonical" href="https://vanlifemum-boop.github.io/Keramotec/partner.html" />
     <title>Partner werden | Keramotec Manufaktur</title>
     <link
       rel="icon"
       href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%2307090a'/%3E%3Cpath d='M16 4l12 12-12 12L4 16z' fill='none' stroke='%23e2231a' stroke-width='2'/%3E%3Ctext x='16' y='21' font-family='Helvetica,Arial,sans-serif' font-size='13' font-weight='700' fill='%23fff' text-anchor='middle'%3EK%3C/text%3E%3C/svg%3E"
     />
+    <!-- Schriften zuerst: sie bestimmen das Layout, Bilder nur die Flaeche. -->
+    <link rel="preload" as="font" type="font/woff2" href="fonts/bodoni-moda.woff2" crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href="fonts/archivo.woff2" crossorigin />
     <link rel="preload" as="image" href="assets/keramotec-hero.webp" fetchpriority="high" />
     <link rel="stylesheet" href="styles.css" />
     <script>
@@ -31,6 +43,7 @@
     </script>
     <script src="vendor/lenis.min.js" defer></script>
     <script src="cinematic.js" defer></script>
+    <script src="motion.js" defer></script>
     <script src="script.js" defer></script>
     <script src="partner.js" defer></script>
   </head>
@@ -373,7 +386,7 @@
 
       <!-- ===================== Zahlen ===================== -->
       <section class="pricing section" id="zahlen" aria-labelledby="zahlen-title">
-        <div class="shell">
+        <div class="shell pricing-shell">
           <div class="pricing-intro">
             <div>
               <p class="section-index" data-reveal>07 — Zahlen</p>

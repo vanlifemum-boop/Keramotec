@@ -1,14 +1,67 @@
+/* ============ Schriften ============
+   Selbst gehostet (fonts/), kein Aufruf an Google beim Seitenbesuch.
+   Bodoni Moda traegt die Schlagzeilen — die Schriftklasse der Automobil- und
+   Modemagazine. Archivo bleibt daneben sachlich und lesbar. */
+@font-face {
+  font-family: "Bodoni Moda";
+  src: url("fonts/bodoni-moda.woff2") format("woff2");
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Archivo";
+  src: url("fonts/archivo.woff2") format("woff2");
+  font-weight: 400 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Ersatzschriften auf die Breite der echten Schrift gebracht (gemessen im
+   Browser: Bodoni laeuft 15,3 % breiter als Times, Archivo 0,8 % schmaler als
+   Helvetica). Ohne das springt das Layout, sobald die Schrift nachgeladen ist. */
+@font-face {
+  font-family: "Bodoni Ersatz";
+  src: local("Times New Roman"), local("Times"), local("Liberation Serif"), local("DejaVu Serif");
+  size-adjust: 115.3%;
+  ascent-override: 92%;
+  descent-override: 24%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: "Archivo Ersatz";
+  src: local("Helvetica Neue"), local("Arial"), local("Liberation Sans"), local("DejaVu Sans");
+  size-adjust: 99.2%;
+}
+
 :root {
   --ink: #07090a;
   --ink-soft: #101315;
   --panel: #15191b;
   --line: rgba(255, 255, 255, 0.13);
   --line-strong: rgba(255, 255, 255, 0.25);
-  --paper: #f3f1ed;
+  --paper: #f2efe7;
   --muted: #9da3a6;
   --red: #e2231a;
   --red-dark: #a8130d;
   --silver: #dfe3e4;
+  --panel-2: #1b2022;
+  /* Schatten tragen den Farbton des Hintergrunds, nicht reines Schwarz. */
+  --shadow: 0 30px 90px rgba(4, 8, 11, 0.55);
+  --font-display: "Bodoni Moda", "Bodoni Ersatz", "Times New Roman", Georgia, serif;
+  --font-text: "Archivo", "Archivo Ersatz", "Helvetica Neue", Arial, sans-serif;
+  /* Saubere Ebenen-Skala statt gewachsener Einzelwerte. */
+  --z-below: -1;
+  --z-base: 1;
+  --z-frame: 6;
+  --z-grain: 60;
+  --z-nav: 90;
+  --z-header: 100;
+  --z-bar: 150;
+  --z-progress: 200;
+  --z-skip: 1000;
   /* 100% statt 100vw: 100vw schliesst die Scrollbar ein und erzeugt sonst auf
      dem Desktop einen horizontalen Ueberhang. */
   --shell: min(1240px, calc(100% - 48px));
@@ -41,9 +94,10 @@ body {
   overflow-x: clip;
   background: var(--ink);
   color: var(--paper);
-  font-family: "Helvetica Neue", "Arial Nova", Arial, sans-serif;
+  font-family: var(--font-text);
   font-size: 16px;
-  line-height: 1.55;
+  font-synthesis-weight: none;
+  line-height: 1.6;
   text-rendering: optimizeLegibility;
 }
 
@@ -82,6 +136,12 @@ h2,
 h3,
 p {
   margin-top: 0;
+}
+
+/* Fliesstext: keine Schusterjungen, keine einzeln haengenden Woerter. */
+p,
+li {
+  text-wrap: pretty;
 }
 
 p,
@@ -265,8 +325,15 @@ address {
   transition: transform 260ms var(--ease);
 }
 
-.main-nav > a:hover {
+.main-nav > a:hover,
+.main-nav > a[aria-current="page"] {
   color: #fff;
+}
+
+.main-nav > a[aria-current="page"]:not(.nav-cta)::after {
+  transform: scaleX(1);
+  transform-origin: left;
+  background: var(--line-strong);
 }
 
 .main-nav > a:hover::after {
@@ -443,18 +510,8 @@ address {
 
 .stage-headline {
   margin: 12px 0 0;
-  font-size: clamp(52px, 8vw, 122px);
-  font-weight: 700;
-  letter-spacing: -0.066em;
-  line-height: 0.88;
-  text-transform: uppercase;
+  font-size: clamp(44px, 7vw, 108px);
   text-wrap: balance;
-}
-
-.stage-headline em {
-  color: transparent;
-  font-style: normal;
-  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.68);
 }
 
 .eyebrow {
@@ -481,26 +538,33 @@ address {
 }
 
 .hero h1,
-.section h2 {
+.section h2,
+.stage-headline,
+.display-copy {
   margin-bottom: 0;
-  font-weight: 700;
-  letter-spacing: -0.066em;
-  line-height: 0.88;
-  text-transform: uppercase;
+  font-family: var(--font-display);
+  /* Eine Didone braucht Luft: weniger negative Laufweite und mehr Zeilenhoehe
+     als eine Grotesk, sonst kleben die Haarstriche aneinander. */
+  font-weight: 500;
+  font-optical-sizing: auto;
+  letter-spacing: -0.018em;
+  line-height: 0.98;
+  text-transform: none;
 }
 
 .hero h1 {
   max-width: 790px;
   margin-top: 0;
-  font-size: clamp(66px, 10vw, 154px);
+  font-size: clamp(52px, 8.6vw, 132px);
   text-wrap: balance;
   animation: rise-in 1s 260ms var(--ease) both;
 }
 
-.hero h1 em {
+.hero h1 em,
+.stage-headline em {
   color: transparent;
-  font-style: normal;
-  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.68);
+  font-style: italic;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.62);
 }
 
 .hero-copy {
@@ -544,6 +608,14 @@ address {
   transform: translateY(-2px);
 }
 
+/* Haptik: der Knopf gibt beim Druecken nach. */
+.button:active,
+.nav-cta:active,
+.price-group summary:active {
+  transform: translateY(0) scale(0.985);
+  transition-duration: 90ms;
+}
+
 .button-primary {
   background: var(--red);
   color: #fff;
@@ -569,7 +641,9 @@ address {
   gap: clamp(20px, 5vw, 74px);
   margin-top: clamp(60px, 9vh, 110px);
   color: rgba(255, 255, 255, 0.4);
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-text);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
   font-size: 9px;
   letter-spacing: 0.08em;
   animation: rise-in 1s 560ms var(--ease) both;
@@ -582,7 +656,7 @@ address {
 
 .hero-meta b {
   color: rgba(255, 255, 255, 0.85);
-  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-family: var(--font-text);
   font-size: 10px;
   letter-spacing: 0.11em;
   text-transform: uppercase;
@@ -624,7 +698,7 @@ address {
 
 .section {
   position: relative;
-  padding-block: clamp(96px, 12vw, 180px);
+  padding-block: clamp(96px, 12vw, 180px) clamp(112px, 14vw, 210px);
 }
 
 /* Sprungziele nicht unter den fixen Header laufen lassen. */
@@ -642,7 +716,9 @@ main[id] {
 
 .section-index {
   color: var(--muted);
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-text);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
   font-size: 10px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -681,7 +757,7 @@ main[id] {
 }
 
 .display-copy {
-  font-size: clamp(45px, 7vw, 110px);
+  font-size: clamp(40px, 6vw, 96px);
 }
 
 .display-copy span,
@@ -771,7 +847,9 @@ main[id] {
 
 .service-number {
   color: var(--red);
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-text);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
   font-size: 11px;
 }
 
@@ -837,7 +915,7 @@ main[id] {
   gap: 1px;
   background: rgba(255, 255, 255, 0.18);
   border: 1px solid rgba(255, 255, 255, 0.18);
-  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.38);
+  box-shadow: var(--shadow);
 }
 
 .benefit-grid article {
@@ -849,7 +927,9 @@ main[id] {
 
 .benefit-grid b {
   color: var(--red);
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-text);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
   font-size: 10px;
 }
 
@@ -969,7 +1049,9 @@ main[id] {
 .card-label {
   margin-top: 52px;
   color: var(--red);
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-text);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
   font-size: 10px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -1048,6 +1130,10 @@ main[id] {
   display: none;
 }
 
+.price-table > div span {
+  font-variant-numeric: tabular-nums;
+}
+
 .price-group summary small {
   display: flex;
   align-items: center;
@@ -1091,6 +1177,8 @@ main[id] {
 
 .price-table b {
   color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
   text-align: right;
 }
 
@@ -1105,8 +1193,8 @@ main[id] {
   grid-template-columns: 240px minmax(0, 1fr);
   gap: 34px;
   margin-top: 54px;
-  padding: 30px;
-  border-left: 4px solid var(--red);
+  padding: 30px 0 0;
+  border-top: 1px solid rgba(7, 9, 10, 0.16);
   background: #e6e4df;
 }
 
@@ -1169,16 +1257,19 @@ main[id] {
 }
 
 .craft-line {
-  font-size: clamp(72px, 10vw, 145px);
-  font-weight: 800;
-  letter-spacing: -0.09em;
-  line-height: 0.72;
+  font-family: var(--font-display);
+  font-size: clamp(66px, 9.2vw, 132px);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 0.82;
   text-transform: uppercase;
 }
 
 .craft-line.outline {
   color: transparent;
-  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.5);
+  font-style: italic;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.45);
+  text-transform: none;
 }
 
 .craft-visual p {
@@ -1325,7 +1416,9 @@ main[id] {
   display: none;
 }
 
-[data-reveal] {
+/* Nur mit aktivem JavaScript verstecken — es ist auch das JavaScript, das die
+   Elemente wieder hervorholt. */
+.js [data-reveal] {
   opacity: 0;
   transform: translateY(32px);
   transition: opacity 720ms var(--ease), transform 720ms var(--ease);
@@ -1360,6 +1453,265 @@ main[id] {
 @keyframes marquee {
   to {
     transform: translateX(-50%);
+  }
+}
+
+/* ============ Layout-Rhythmus ============
+   Jeder Abschnitt schoepft anders aus demselben Raster. Gleichmass ueber alle
+   Abschnitte hinweg ist das, woran man automatisch gebaute Seiten erkennt. */
+
+/* --- Anspruch: Zitatsatz mit haengender Initiale --- */
+.statement-grid {
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: clamp(28px, 4vw, 64px);
+  align-items: start;
+}
+
+.statement-grid > .section-index {
+  grid-column: 1 / 3;
+  padding-top: 0.9em;
+}
+
+.statement-grid > div {
+  grid-column: 3 / 12;
+}
+
+/* Initiale wie im Magazin: der erste Buchstabe traegt drei Zeilen. */
+.statement .lead::first-letter {
+  float: left;
+  margin: 0.06em 0.14em 0 0;
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: 3.1em;
+  font-weight: 500;
+  line-height: 0.78;
+}
+
+/* --- Leistungen: Ziffern haengen in den Rand, Zeilen wechseln den Einzug --- */
+.service-row {
+  grid-template-columns: clamp(56px, 7vw, 104px) minmax(0, 1fr) auto;
+  align-items: baseline;
+}
+
+.service-number {
+  align-self: start;
+  margin-left: clamp(-56px, -3.6vw, 0px);
+  color: rgba(255, 255, 255, 0.16);
+  font-family: var(--font-display);
+  font-size: clamp(38px, 4.6vw, 82px);
+  font-variant-numeric: tabular-nums;
+  line-height: 0.8;
+  transition: color 420ms var(--ease);
+}
+
+.service-row:hover .service-number {
+  color: var(--red);
+}
+
+.service-row:nth-child(even) {
+  padding-left: clamp(0px, 5vw, 96px);
+}
+
+.service-row h3 {
+  font-family: var(--font-display);
+  font-size: clamp(21px, 2.2vw, 30px);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  text-transform: none;
+}
+
+/* --- Vergleich: 7 zu 5 statt sauberer Haelften, zweite Spalte tiefer --- */
+.comparison-grid {
+  grid-template-columns: 7fr 5fr;
+  align-items: start;
+  background: transparent;
+  border: 0;
+  gap: clamp(20px, 3vw, 48px);
+}
+
+.comparison-card {
+  border: 1px solid #d8d7d3;
+}
+
+.comparison-card.solution {
+  margin-top: clamp(28px, 5vw, 88px);
+}
+
+/* --- Speziallösungen: eine grosse Karte, zwei kleine daneben --- */
+.specialty-grid {
+  grid-template-columns: 1.12fr 0.88fr;
+}
+
+.specialty-card:first-child {
+  grid-row: span 2;
+  justify-content: flex-end;
+}
+
+.specialty-card:first-child h3 {
+  font-size: clamp(26px, 2.6vw, 38px);
+}
+
+/* --- Preise: der Kopf bleibt stehen, waehrend die Liste durchlaeuft --- */
+@media (min-width: 981px) {
+  .pricing-shell {
+    display: grid;
+    grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr);
+    column-gap: clamp(48px, 6vw, 110px);
+    align-items: start;
+  }
+
+  .pricing-shell > .pricing-intro {
+    position: sticky;
+    top: 128px;
+    grid-column: 1;
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .pricing-shell > .price-groups {
+    grid-column: 2;
+    grid-row: 1;
+    margin-top: 0;
+  }
+
+  /* Der Hinweis laeuft unter beiden Spalten durch — in der schmalen linken
+     Spalte brach der Text sonst mitten im Wort um. */
+  .pricing-shell > .pricing-notice {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    margin-top: clamp(56px, 6vw, 96px);
+  }
+}
+
+/* --- Manufaktur: Bild und Text ueberlappen sich --- */
+.craft-grid {
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  align-items: center;
+}
+
+.craft-visual {
+  margin-right: clamp(-96px, -4.5vw, 0px);
+}
+
+/* Die Bildunterschrift nach links, sonst landet sie unter dem Textblock,
+   der jetzt darueberliegt. */
+.craft-visual p {
+  right: auto;
+  left: 40px;
+}
+
+.craft-copy {
+  position: relative;
+  z-index: var(--z-base);
+  padding-left: clamp(28px, 5vw, 96px);
+}
+
+.craft h2 {
+  text-transform: none;
+}
+
+/* ============ Bewegung ============
+   Startzustaende stehen nur dann im Weg, wenn motion.js sie auch aufloest —
+   deshalb haengt alles an .js-motion. Ohne JavaScript oder bei reduzierter
+   Bewegung greift nichts davon. */
+
+/* --- Woerter steigen aus ihrer eigenen Maske --- */
+.js-motion .mw {
+  display: inline-block;
+  overflow: hidden;
+  /* Platz fuer Unterlaengen und kursive Ueberhaenge, sonst schneidet die Maske. */
+  padding: 0.02em 0.06em 0.14em;
+  margin: 0 -0.06em -0.14em;
+  vertical-align: bottom;
+}
+
+.js-motion .mw-i {
+  display: inline-block;
+  will-change: transform;
+}
+
+.js-motion .mw-ready .mw-i {
+  transform: translateY(108%);
+  opacity: 0;
+}
+
+.js-motion .mw-in .mw-i {
+  transform: none;
+  opacity: 1;
+  transition: transform 900ms var(--ease), opacity 600ms ease;
+}
+
+/* Die Zeile animiert sich selbst — der pauschale Reveal darf nicht dazwischenfunken. */
+.js-motion [data-reveal].mw-ready,
+.js-motion [data-reveal].mask-reveal {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+
+/* --- Gestaffelte Eintritte, wechselnde Richtung --- */
+.js-motion [data-reveal] {
+  transition-delay: var(--rv-delay, 0ms);
+}
+
+.js-motion [data-reveal].rv-side {
+  transform: translate3d(-28px, 12px, 0);
+}
+
+.js-motion [data-reveal].rv-side.is-visible {
+  transform: none;
+}
+
+/* --- Flaechen werden aufgedeckt, nicht eingeblendet --- */
+.js-motion .mask-reveal {
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 1000ms var(--ease);
+  will-change: clip-path;
+}
+
+.js-motion .mask-reveal.mask-in {
+  clip-path: inset(0 0 0 0);
+}
+
+/* --- Magnetische Knoepfe --- */
+.js-motion .button,
+.js-motion .nav-cta {
+  transform: translate3d(var(--mag-x, 0px), var(--mag-y, 0px), 0);
+}
+
+.js-motion .button:hover {
+  transform: translate3d(var(--mag-x, 0px), calc(var(--mag-y, 0px) - 2px), 0);
+}
+
+.js-motion .button:active {
+  transform: translate3d(var(--mag-x, 0px), var(--mag-y, 0px), 0) scale(0.985);
+}
+
+/* --- Cursor-Ring, nur an der Maus --- */
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: var(--z-progress);
+  width: 26px;
+  height: 26px;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: 50%;
+  pointer-events: none;
+  mix-blend-mode: difference;
+  transition: width 260ms var(--ease), height 260ms var(--ease), border-color 260ms ease;
+}
+
+.cursor-ring.is-over {
+  width: 46px;
+  height: 46px;
+  border-color: var(--red);
+}
+
+@media (pointer: coarse) {
+  .cursor-ring {
+    display: none;
   }
 }
 
@@ -1608,6 +1960,42 @@ html:not(.js) .partner-form {
     --stage-height: 360vh;
   }
 
+  /* Der Rhythmus der grossen Fassung faellt hier zusammen: eine Spalte,
+     keine Ueberlappung, keine haengenden Ziffern. */
+  .statement-grid > .section-index,
+  .statement-grid > div {
+    grid-column: 1 / -1;
+  }
+
+  .comparison-grid,
+  .specialty-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .specialty-card:first-child {
+    grid-row: auto;
+  }
+
+  .comparison-card.solution {
+    margin-top: 0;
+  }
+
+  .service-row:nth-child(even) {
+    padding-left: 0;
+  }
+
+  .service-number {
+    margin-left: 0;
+  }
+
+  .craft-visual {
+    margin-right: 0;
+  }
+
+  .craft-copy {
+    padding-left: 0;
+  }
+
   .form-grid {
     gap: 22px 24px;
   }
@@ -1779,7 +2167,7 @@ html:not(.js) .partner-form {
 
   .hero h1,
   .stage-headline {
-    font-size: clamp(40px, 12.5vw, 64px);
+    font-size: clamp(42px, 14vw, 72px);
   }
 
   .hero-eyebrow {
@@ -1853,13 +2241,18 @@ html:not(.js) .partner-form {
   .craft h2,
   .contact h2,
   .protection h2 {
-    font-size: clamp(34px, 11vw, 52px);
+    font-size: clamp(36px, 12vw, 60px);
   }
 
   .service-row {
-    grid-template-columns: 34px 1fr;
+    grid-template-columns: 48px 1fr;
     min-height: 130px;
-    gap: 12px;
+    gap: 14px;
+  }
+
+  /* Die Ziffer muss in ihre Spalte passen — sonst laeuft sie unter den Text. */
+  .service-number {
+    font-size: 30px;
   }
 
   .service-tag {
@@ -1976,7 +2369,7 @@ html:not(.js) .partner-form {
 
   .hero h1,
   .stage-headline {
-    font-size: clamp(36px, 13.2vw, 52px);
+    font-size: clamp(38px, 15vw, 58px);
   }
 
   .hero-meta {
@@ -2000,12 +2393,16 @@ html:not(.js) .partner-form {
   .craft h2,
   .contact h2,
   .protection h2 {
-    font-size: clamp(30px, 10.5vw, 44px);
+    font-size: clamp(32px, 11.5vw, 48px);
   }
 
   .service-row {
-    grid-template-columns: 28px 1fr;
+    grid-template-columns: 40px 1fr;
     gap: 10px;
+  }
+
+  .service-number {
+    font-size: 25px;
   }
 
   .brand-type small {
