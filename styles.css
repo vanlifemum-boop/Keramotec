@@ -1,11 +1,13 @@
 /* ============ Schriften ============
    Selbst gehostet (fonts/), kein Aufruf an Google beim Seitenbesuch.
-   Bodoni Moda traegt die Schlagzeilen — die Schriftklasse der Automobil- und
-   Modemagazine. Archivo bleibt daneben sachlich und lesbar. */
+   Fraunces traegt die Schlagzeilen: editorial, aber mit kraeftigen Strichen.
+   Die zuvor eingesetzte Didone (Bodoni) hatte auf dem Handy zu duenne
+   Haarstriche — auf kleinen Displays bricht so eine Schrift weg.
+   Archivo bleibt daneben sachlich und lesbar. */
 @font-face {
-  font-family: "Bodoni Moda";
-  src: url("fonts/bodoni-moda.woff2") format("woff2");
-  font-weight: 400 700;
+  font-family: "Fraunces";
+  src: url("fonts/fraunces.woff2") format("woff2");
+  font-weight: 500 700;
   font-style: normal;
   font-display: swap;
 }
@@ -22,9 +24,9 @@
    Browser: Bodoni laeuft 15,3 % breiter als Times, Archivo 0,8 % schmaler als
    Helvetica). Ohne das springt das Layout, sobald die Schrift nachgeladen ist. */
 @font-face {
-  font-family: "Bodoni Ersatz";
-  src: local("Times New Roman"), local("Times"), local("Liberation Serif"), local("DejaVu Serif");
-  size-adjust: 115.3%;
+  font-family: "Serif Ersatz";
+  src: local("Georgia"), local("Times New Roman"), local("Liberation Serif"), local("DejaVu Serif");
+  size-adjust: 102.7%;
   ascent-override: 92%;
   descent-override: 24%;
   line-gap-override: 0%;
@@ -50,7 +52,7 @@
   --panel-2: #1b2022;
   /* Schatten tragen den Farbton des Hintergrunds, nicht reines Schwarz. */
   --shadow: 0 30px 90px rgba(4, 8, 11, 0.55);
-  --font-display: "Bodoni Moda", "Bodoni Ersatz", "Times New Roman", Georgia, serif;
+  --font-display: "Fraunces", "Serif Ersatz", Georgia, "Times New Roman", serif;
   --font-text: "Archivo", "Archivo Ersatz", "Helvetica Neue", Arial, sans-serif;
   /* Saubere Ebenen-Skala statt gewachsener Einzelwerte. */
   --z-below: -1;
@@ -177,7 +179,7 @@ address {
   position: fixed;
   top: 16px;
   left: 16px;
-  z-index: 1000;
+  z-index: var(--z-skip);
   transform: translateY(-180%);
   padding: 12px 18px;
   background: #fff;
@@ -193,7 +195,7 @@ address {
 .film-grain {
   position: fixed;
   inset: 0;
-  z-index: 50;
+  z-index: var(--z-grain);
   pointer-events: none;
   opacity: 0.025;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.88' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.9'/%3E%3C/svg%3E");
@@ -202,7 +204,7 @@ address {
 .scroll-progress {
   position: fixed;
   inset: 0 0 auto;
-  z-index: 200;
+  z-index: var(--z-progress);
   height: 2px;
   background: rgba(255, 255, 255, 0.08);
 }
@@ -219,7 +221,7 @@ address {
 .site-header {
   position: fixed;
   inset: 2px 0 auto;
-  z-index: 100;
+  z-index: var(--z-header);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -545,10 +547,10 @@ address {
   font-family: var(--font-display);
   /* Eine Didone braucht Luft: weniger negative Laufweite und mehr Zeilenhoehe
      als eine Grotesk, sonst kleben die Haarstriche aneinander. */
-  font-weight: 500;
+  font-weight: 600;
   font-optical-sizing: auto;
-  letter-spacing: -0.018em;
-  line-height: 0.98;
+  letter-spacing: -0.022em;
+  line-height: 0.96;
   text-transform: none;
 }
 
@@ -563,8 +565,9 @@ address {
 .hero h1 em,
 .stage-headline em {
   color: transparent;
-  font-style: italic;
-  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.62);
+  font-style: normal;
+  /* Kraeftigere Kontur: bei der duennen Didone war sie kaum zu sehen. */
+  -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.72);
 }
 
 .hero-copy {
@@ -760,8 +763,11 @@ main[id] {
   font-size: clamp(40px, 6vw, 96px);
 }
 
-.display-copy span,
-.contact h2 span {
+/* :not(.mw) ist noetig: motion.js verpackt jedes Wort in <span class="mw">.
+   Ohne den Ausschluss faerbt diese Regel die komplette Zeile rot statt nur
+   den gesetzten Akzent. */
+.display-copy > span:not(.mw),
+.contact h2 > span:not(.mw) {
   color: var(--red);
 }
 
@@ -1038,13 +1044,7 @@ main[id] {
   background: #111416;
 }
 
-.specialty-card::before {
-  content: "";
-  width: 38px;
-  height: 38px;
-  transform: rotate(45deg);
-  border: 1px solid var(--line-strong);
-}
+
 
 .card-label {
   margin-top: 52px;
@@ -1081,9 +1081,7 @@ main[id] {
   color: #fff;
 }
 
-.specialty-red::before {
-  border-color: rgba(255, 255, 255, 0.75);
-}
+
 
 .pricing {
   background: var(--paper);
@@ -2006,7 +2004,7 @@ html:not(.js) .partner-form {
 
   .nav-toggle {
     position: relative;
-    z-index: 2;
+    z-index: calc(var(--z-nav) + 1);
     display: block;
   }
 
@@ -2020,21 +2018,38 @@ html:not(.js) .partner-form {
 
   .main-nav {
     position: fixed;
-    inset: 0;
+    inset: 0 0 auto;
+    /* inset: 0 richtet sich am grossen Viewport aus — auf dem Handy reicht das
+       Menue dann hinter Adressleiste und Browser-Toolbar und wird unten
+       abgeschnitten. dvh ist die tatsaechlich sichtbare Hoehe. */
+    height: 100vh;
+    height: 100dvh;
+    z-index: var(--z-nav);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    gap: 20px;
-    padding: 100px max(var(--gutter), var(--safe-right)) 100px max(var(--gutter), var(--safe-left));
+    gap: clamp(8px, 2vh, 20px);
+    padding: clamp(84px, 13vh, 108px) max(var(--gutter), var(--safe-right))
+             calc(clamp(28px, 5vh, 64px) + var(--safe-bottom)) max(var(--gutter), var(--safe-left));
     visibility: hidden;
     opacity: 0;
     transform: translateY(-10px);
-    background: rgba(7, 9, 10, 0.98);
-    /* Auf niedrigen Viewports (Handy quer) muss das Menue scrollen koennen. */
+    background: #07090a;
+    /* Passt der Inhalt nicht, muss er scrollbar sein statt abgeschnitten. */
     overflow-y: auto;
     overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
     transition: opacity 240ms ease, transform 240ms ease, visibility 240ms;
+  }
+
+  /* Die feste Kontaktleiste liegt hoeher als der Header und deckte den
+     letzten Menuepunkt zu. Bei offenem Menue hat sie nichts zu suchen —
+     der gleiche Aufruf steht als Schaltflaeche im Menue. */
+  body.nav-open .mobile-call {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(100%);
   }
 
   .main-nav.is-open {
@@ -2340,7 +2355,8 @@ html:not(.js) .partner-form {
 
   .mobile-call {
     position: fixed;
-    z-index: 150;
+    z-index: var(--z-bar);
+    transition: opacity 200ms ease, transform 240ms var(--ease);
     right: 0;
     bottom: 0;
     left: 0;
