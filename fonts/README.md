@@ -5,12 +5,14 @@ Selbst gehostet, kein Aufruf an Google Fonts beim Seitenbesuch — das vermeidet
 
 | Datei | Schrift | Verwendung | Lizenz |
 | --- | --- | --- | --- |
-| `bodoni-moda.woff2` | Bodoni Moda, variabel (`wght` 400–700, `opsz` 48–96) | Schlagzeilen | SIL OFL 1.1, siehe `OFL-BodoniModa.txt` |
-| `archivo.woff2` | Archivo, variabel (`wght` 400–800) | Fließtext, Labels, Zahlen | SIL OFL 1.1, siehe `OFL-Archivo.txt` |
+| `archivo.woff2` | Archivo, variabel (`wght` 400–800) | alles: Schlagzeilen, Fließtext, Labels, Zahlen | SIL OFL 1.1, siehe `OFL-Archivo.txt` |
 
-Beide stammen aus dem Repository `google/fonts` und wurden mit `fonttools` auf die
-tatsächlich benötigten Zeichen verkleinert: Latin, deutsche Umlaute und ß, Anführungs-
-und Gedankenstriche, Euro, Pfeile. Zusammen 52 kB statt mehrerer hundert.
+Eine einzige Schrift für die ganze Seite. Die Hierarchie entsteht über Größe und
+Gewicht, nicht über einen Schriftwechsel. Aus `google/fonts` bezogen und mit
+`fonttools` auf die tatsächlich benötigten Zeichen verkleinert: Latin, deutsche
+Umlaute und ß, Anführungs- und Gedankenstriche, Euro, Pfeile. 26 kB.
 
-Beim Austauschen einer Schrift daran denken, die Fallback-Metriken in `styles.css`
-(`size-adjust`, `ascent-override`) neu zu messen — sonst springt das Layout beim Nachladen.
+Zwischenstände, die verworfen wurden: Bodoni Moda (zu dünne Haarstriche auf dem
+Handy) und Fraunces (immer noch zu verspielt). Wer erneut wechselt, muss die
+Fallback-Metrik in `styles.css` (`size-adjust`) neu messen — sonst springt das
+Layout, sobald die Schrift nachgeladen ist.
